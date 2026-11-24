@@ -1,0 +1,13 @@
+{
+  "name": "solar-web-portal-prototype-ux-qa",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test:syntax": "node --check assets/ux-refinement.js",
+    "test:ui": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
