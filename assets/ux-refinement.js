@@ -291,8 +291,17 @@
   if (exportHead) exportHead.textContent = "My Exports — Simulation Only";
   const exportSub = byId("view-exports").querySelector(".section-subtitle");
   if (exportSub) exportSub.textContent = "Demonstration of queue states. There are no backend workers, generated files, downloads or audit logs in this prototype.";
-  const reportSub = byId("view-reports").querySelector(".section-subtitle");
-  if (reportSub) reportSub.textContent += " · All values on this page are synthetic examples.";
+  const legacyReportRender = window.renderReportsTable;
+  window.renderReportsTable = function () {
+    legacyReportRender();
+    const subtitle = byId("reportPeriodSubtitle");
+    subtitle.textContent += " · SYNTHETIC EXAMPLE ONLY (not from SQL)";
+    ["daily", "weekly", "monthly", "yearly"].forEach(period => {
+      const btn = byId("rep" + period.charAt(0).toUpperCase() + period.slice(1) + "Btn");
+      if (btn) btn.setAttribute("aria-pressed", String(state.reportPeriod === period));
+    });
+  };
+  window.renderReportsTable();
 
   // Trend inherits the last executed Explorer preview (not unsaved draft filters).
   const chart = byId("trendCanvas"), chartWrap = byId("trendCanvasWrap");
