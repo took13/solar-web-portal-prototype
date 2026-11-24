@@ -1,0 +1,41 @@
+name: UX Prototype QA
+on:
+  push:
+    branches:
+      - feature/ux-ui-professional-refinement
+  workflow_dispatch:
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check assets/ux-refinement.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script(?:\s[^>]*)?>([\s\S]*?)</script>", html, re.I)
+          assert scripts, "No inline script was found"
+          Path("/tmp/solar-inline.js").write_text("\n".join(scripts), encoding="utf-8")
+          assert './assets/ux-refinement.css' in html
+          assert './assets/ux-refinement.js' in html
+          assert 'DEMO / SYNTHETIC DATA' in html
+          PY
+          node --check /tmp/solar-inline.js
+      - name: Install QA dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Browser smoke tests
+        run: npm run test:ui
