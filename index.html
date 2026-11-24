@@ -1495,6 +1495,7 @@
       .breadcrumb-root, .breadcrumb-sep { display: none; }
     }
   </style>
+  <link rel="stylesheet" href="./assets/ux-refinement.css" />
 </head>
 <body>
   <div id="app" class="portal-shell" data-theme="dark">
@@ -1584,8 +1585,8 @@
         <div class="user-chip">
           <div class="user-avatar" aria-hidden="true">SO</div>
           <div class="brand-text truncate">
-            <div class="font-medium truncate" style="font-size: 12px;">System Owner</div>
-            <div class="font-mono-tech text-tertiary truncate" style="font-size: 10.5px;">RO-SQL · Local DEV</div>
+            <div class="font-medium truncate" style="font-size: 12px;">Demo Viewer</div>
+            <div class="font-mono-tech text-tertiary truncate" style="font-size: 10.5px;">No login · No SQL</div>
           </div>
         </div>
       </div>
@@ -1603,7 +1604,7 @@
           <span class="breadcrumb-root">SOLAR-DATA</span>
           <span class="text-tertiary breadcrumb-sep" aria-hidden="true">/</span>
           <h1 id="pageTitle" class="page-title truncate">Overview</h1>
-          <span id="pageSubBadge" class="tag tag-neutral font-mono-tech page-sub-badge">UX SPEC · ILLUSTRATIVE DATA</span>
+          <span id="pageSubBadge" class="tag tag-neutral font-mono-tech page-sub-badge">DEMO ONLY · SYNTHETIC DATA</span>
         </div>
 
         <!-- Center: Compact Catalog & Site Quick Search -->
@@ -1624,10 +1625,10 @@
           <div class="freshness-pill font-mono-tech" title="Canonical UI display timezone is Asia/Bangkok (ICT)">
             <span>ICT UTC+7</span>
             <span class="pill-divider" aria-hidden="true">|</span>
-            <span>As of 14:15</span>
+            <span>Sample time: 2026-11-24</span>
           </div>
 
-          <span class="tag tag-cyan font-mono-tech env-badge" title="Local DEV mode bound to 127.0.0.1">DEV · 127.0.0.1</span>
+          <span class="tag tag-cyan font-mono-tech env-badge" title="Static illustrative prototype; no backend connection">STATIC · NO BACKEND</span>
 
           <button id="themeToggleBtn" type="button" class="btn-secondary" aria-label="Toggle Dark and Light theme" aria-pressed="false" title="Toggle Dark / Light theme">
             <svg id="themeIconSun" class="hidden" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
@@ -1636,6 +1637,11 @@
           </button>
         </div>
       </header>
+
+      <div class="demo-banner" role="status" aria-label="Demo data warning">
+        <span><strong>DEMO / SYNTHETIC DATA</strong> — This is a UX prototype. No live SolarDataDB connection, user authorization, export files, or background workers.</span>
+        <em>Preview timestamp is illustrative · not data freshness</em>
+      </div>
 
       <!-- Active View Container -->
       <main id="viewContainer" class="view-container">
@@ -1647,7 +1653,7 @@
               <div class="section-eyebrow font-mono-tech">Operational Workspace</div>
               <h2 class="section-h2">Solar Data Self-Service Portal</h2>
               <p class="section-subtitle">
-                Read-only governed access to <span class="font-mono-tech">SolarDataDB</span> reporting views — sample rows below are wireframe placeholders until DEV-01 SSMS verification.
+                UX prototype illustrating a future governed read-only SolarDataDB experience. All values, trends, statuses and exports on this page are simulated, not operational data.
               </p>
             </div>
             <div class="actions-row">
@@ -1665,12 +1671,12 @@
           <div class="surface-panel telemetry-ribbon">
             <div class="ribbon-cell">
               <div class="ribbon-top">
-                <span>AUTHORIZED SITE SCOPE</span>
+                <span>DEMO SOURCE SCOPE</span>
                 <span class="font-mono-tech">PW-02</span>
               </div>
               <div class="ribbon-metric">
                 <span class="ribbon-value font-mono-tech">3 Sources</span>
-                <span class="text-secondary" style="font-size: 11.5px;">ACL Pending Verify</span>
+                <span class="text-secondary" style="font-size: 11.5px;">Not authorized scope</span>
               </div>
               <div class="ribbon-meta">Huawei · SolarEdge · Glow</div>
             </div>
@@ -1682,7 +1688,7 @@
               </div>
               <div class="ribbon-metric">
                 <span class="ribbon-value font-mono-tech">dash.*</span>
-                <span class="tag tag-ok">Candidate Ready</span>
+                <span class="tag tag-neutral">Design candidate</span>
               </div>
               <div class="ribbon-meta font-mono-tech">vw_site_current, energy_today</div>
             </div>
@@ -1708,7 +1714,7 @@
                 <span class="ribbon-value font-mono-tech">300k</span>
                 <span class="text-secondary" style="font-size: 11.5px;">sync row cap</span>
               </div>
-              <div class="ribbon-meta">30s timeout · Async queue enabled</div>
+              <div class="ribbon-meta">Concept only · No backend enforcement</div>
             </div>
           </div>
 
@@ -1880,8 +1886,8 @@
               <!-- 2. Sites Multi-Select + All Authorized Sites (PW-02) -->
               <div class="field-group">
                 <div class="field-head">
-                  <span class="field-label">Sites Scope</span>
-                  <span class="field-code font-mono-tech">PW-02 · Backend ACL</span>
+                  <span class="field-label">Site selection</span>
+                  <span class="field-code font-mono-tech">PW-02 · Demo only</span>
                 </div>
                 <label class="all-sites-toggle" for="chkAllSites">
                   <span class="check-row-left">
@@ -2001,9 +2007,9 @@
           <div class="explorer-main surface-dense">
             <div class="result-toolbar hairline-b">
               <div class="toolbar-meta">
-                <span class="font-semibold">Preview Grid</span>
+                <span class="font-semibold">Demo Preview Grid</span>
                 <span id="explorerViewBadge" class="sql-chip font-mono-tech">dash.vw_site_generation_trend_today</span>
-                <span id="gridMetaCount" class="font-mono-tech text-tertiary">Showing 6 rows (bounded preview)</span>
+                <span id="gridMetaCount" class="font-mono-tech text-tertiary">Not run</span>
               </div>
               <span class="font-mono-tech text-tertiary" style="font-size: 11px;">Click or press Enter on a row to inspect provenance</span>
             </div>
@@ -2071,7 +2077,7 @@
           </div>
 
           <!-- Live Crosshair Readout Bar -->
-          <div class="trend-readout-bar hairline-b font-mono-tech">
+          <div class="trend-readout-bar hairline-b font-mono-tech" role="status" aria-live="polite">
             <div id="trendReadout" class="trend-readout-values">
               <span class="text-tertiary">Hover or drag across chart to inspect exact timestamp, nulls, and export limitation flags</span>
             </div>
@@ -3292,5 +3298,6 @@
     renderExports();
     recalcExplorer();
   </script>
+  <script src="./assets/ux-refinement.js"></script>
 </body>
 </html>
