@@ -1611,7 +1611,7 @@
         <button id="openCmdBtn" type="button" class="topbar-search" aria-label="Open quick command palette (Ctrl+K or Cmd+K)">
           <span class="topbar-search-label">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
-            Search metrics, sites, groups...
+            Jump to workspace or saved group...
           </span>
           <kbd class="kbd-chip font-mono-tech">⌘K</kbd>
         </button>
@@ -1739,7 +1739,7 @@
                         <span class="font-mono-tech text-tertiary" style="font-size: 11px;">15m grain</span>
                       </div>
                       <div class="quick-list-sub truncate">
-                        active_power_kw, energy_today_kwh, vendor_status_code · All Authorized Huawei + SolarEdge
+                        active_power_kw, energy_today_kwh, vendor_status_code · Demo Huawei + SolarEdge sites
                       </div>
                     </div>
                     <span class="quick-list-cta">Load →</span>
@@ -1767,7 +1767,7 @@
                         <span class="font-mono-tech text-tertiary" style="font-size: 11px;">15m / 1h</span>
                       </div>
                       <div class="quick-list-sub truncate">
-                        grid_export_kwh, grid_import_kwh, meter_net_kw · Glow Solar Farm (Utility Boundary)
+                        Illustrative power/energy fields · Glow Solar Farm (Utility Boundary)
                       </div>
                     </div>
                     <span class="quick-list-cta">Load →</span>
@@ -1782,7 +1782,7 @@
                     <h3 class="panel-title">Data Source Contracts &amp; Known Semantics</h3>
                     <p class="panel-desc">Each vendor preserves its native measurement grain, status taxonomy, and meter boundary.</p>
                   </div>
-                  <span class="font-mono-tech text-tertiary" style="font-size: 11px;">SOLAR-DB</span>
+                  <span class="font-mono-tech text-tertiary" style="font-size: 11px;">CONTRACT CONCEPT</span>
                 </div>
                 <div class="table-scroll">
                   <table class="data-table">
@@ -1850,7 +1850,7 @@
 
               <div class="surface-panel panel-body stack-12">
                 <div class="field-head">
-                  <h3 class="panel-title">Recent Export Jobs</h3>
+                  <h3 class="panel-title">Illustrative Export Jobs</h3>
                   <button id="overviewAllExportsBtn" type="button" class="btn-ghost" onclick="switchView('exports')">All jobs →</button>
                 </div>
                 <div id="overviewRecentExports" class="stack-12"></div>
@@ -2338,7 +2338,7 @@
           <div class="section-header hairline-b">
             <div>
               <h2 class="section-h2 section-h2--sm">Governance &amp; Security Posture</h2>
-              <p class="section-subtitle">Role-gated view for System Owner &amp; Data Stewards. No browser-to-SQL or public exposure.</p>
+              <p class="section-subtitle">Illustrative governance design; role checks and SQL permissions are not implemented in this static prototype.</p>
             </div>
           </div>
           <div class="cards-2col">
@@ -2385,7 +2385,7 @@
         <span id="cmdDialogTitle" class="sr-only">Command Palette</span>
         <div class="cmd-input-row hairline-b">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-cyan" style="flex-shrink: 0;" aria-hidden="true"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
-          <input id="cmdInput" type="text" class="cmd-input" placeholder="Jump to view, parameter group, or catalog metric..." aria-label="Search commands" oninput="renderCmdList(this.value)" />
+          <input id="cmdInput" type="text" class="cmd-input" placeholder="Jump to workspace, saved group, or catalog topic..." aria-label="Search commands" oninput="renderCmdList(this.value)" />
           <kbd class="kbd-chip font-mono-tech">ESC</kbd>
         </div>
         <div id="cmdList" class="cmd-list" role="listbox" aria-label="Matching commands"></div>
@@ -2457,7 +2457,7 @@
         seCondition: 'GAP · 21 Null Buckets MTD'
       },
       yearly: {
-        subtitle: 'Yearly rollup (YTD 2026 ICT) — audited against SolarDataDB reporting views.',
+        subtitle: 'Simulated yearly rollup (YTD 2026 ICT) — not audited against SolarDataDB.',
         mult: 312.0,
         seCoverage: 99.4,
         seCondition: 'FULL · Minor Maintenance Windows Logged'
