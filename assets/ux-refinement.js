@@ -71,6 +71,7 @@
   state.previewContext = null;
   state.queryEstimate = 0;
   state.lastPreviewAt = null;
+  let trendCompanionKey = "";
 
   const legacySwitchView = window.switchView;
   window.switchView = function (viewId, options) {
@@ -176,6 +177,12 @@
     const selected = chosenSites();
     byId("explorerViewBadge").textContent = selected.length === 1 && selected[0] === "Glow Solar Farm" ? "DEMO · Glow meter boundary" : "DEMO · illustrative rows";
 
+    const currentContext = { sites: selectedSites, params: selectedParams, resolution: state.resolution, rangeDays: state.rangeDays, source: getSource() };
+    if (state.previewContext && JSON.stringify(state.previewContext) === JSON.stringify(currentContext)) {
+      byId("explorerOpenTrendBtn").disabled = false;
+      window.renderExplorerTable();
+      return;
+    }
     state.previewRows = [];
     state.previewContext = null;
     byId("explorerOpenTrendBtn").disabled = true;
@@ -208,7 +215,7 @@
       const number = v => v === null ? '<span class="italic text-tertiary">NULL</span>' : Number(v).toLocaleString(undefined, { maximumFractionDigits: 1, minimumFractionDigits: 1 });
       const tagClass = r.statusType === "ok" ? "tag-ok" : r.statusType === "warn" ? "tag-warn" : "tag-danger";
       return '<tr class="row-clickable ' + (idx === 0 ? "selected-row" : "") +
-        '" tabindex="0" role="button" aria-label="Inspect provenance for ' + htmlEscape(r.site) + " at " + htmlEscape(r.ts) +
+        '" tabindex="0" aria-label="Inspect provenance for ' + htmlEscape(r.site) + " at " + htmlEscape(r.ts) +
         '" data-preview-row="' + idx + '"><td class="font-mono-tech">' + htmlEscape(r.ts) +
         '</td><td class="font-medium">' + htmlEscape(r.site) +
         '</td><td class="font-mono-tech text-secondary">' + htmlEscape(r.source) +
@@ -251,7 +258,7 @@
     byId("explorerOpenTrendBtn").disabled = false;
     stateBar.className = "ux-info-bar is-complete";
     stateBar.innerHTML = '<span><strong>Demo preview ready</strong> · ' + selected.length +
-      " selected site(s) · " + params.length + " metrics</span><span>Illustrative · not queried from SQL</span>";
+      " selected site(s) · " + params.length + " metrics</span><span>Illustrative rows from a fixed sample date; requested range is not applied</span>";
     gridMeta.textContent = "Showing " + state.previewRows.length + " illustrative rows · no backend query";
     window.renderExplorerTable();
     showToast("Demo preview updated. No live SQL query was executed.");
@@ -350,11 +357,13 @@
     const W = Math.floor(rect.width), H = Math.floor(rect.height);
     if (W < 120 || H < 120) return;
     const dpr = window.devicePixelRatio || 1;
-    chart.width = Math.floor(W * dpr); chart.height = Math.floor(H * dpr);
+    if (chart.width !== Math.floor(W * dpr)) chart.width = Math.floor(W * dpr);
+    if (chart.height !== Math.floor(H * dpr)) chart.height = Math.floor(H * dpr);
     const ctx = chart.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
     const series = activeSeries();
-    renderTrendCompanion(series);
+    const key = JSON.stringify({ ids: series.map(s => s.id), theme: state.theme, resolution: state.previewContext && state.previewContext.resolution });
+    if (trendCompanionKey !== key) { renderTrendCompanion(series); trendCompanionKey = key; }
     if (!series.length) {
       ctx.fillStyle = state.theme === "dark" ? "#CBD5E1" : "#475569";
       ctx.font = "14px Inter, sans-serif"; ctx.textAlign = "center";
@@ -420,6 +429,7 @@
     byId("trendReadout").textContent = "DEMO · 2026-11-24 " + p.label + " ICT · " +
       activeSeries().map(s => s.label + ": " + (seriesValue(s, p) === null ? "NULL" : seriesValue(s, p).toFixed(1) + " kW")).join(" · ");
   }
+  chart.addEventListener("pointerleave", () => { pointerIndex = -1; byId("trendReadout").textContent = "DEMO · Pointer left plot. Use arrow keys for keyboard exploration."; });
   chart.addEventListener("keydown", e => {
     if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return;
     e.preventDefault();
